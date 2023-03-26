@@ -2,6 +2,10 @@ import axios from '../custom-axios/axios';
 
 const BookService = {
 
+    fetchCategories: () => {
+        return axios.get("/categories");
+    },
+
     fetchBooks: () => {
         return axios.get("/books");
     },

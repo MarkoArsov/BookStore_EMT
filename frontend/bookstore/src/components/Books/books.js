@@ -3,6 +3,7 @@ import { Component } from "react";
 import BookService from "../../service/bookService";
 
 class Books extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +26,6 @@ class Books extends Component {
   render() {
     return (
           <div className={"container mm-4 mt-5"}>
-          <h1>Books</h1>
           <div className={"row"}>
               <div className={"table-responsive"}>
                   <table className={"table table-striped"}>
@@ -35,6 +35,8 @@ class Books extends Component {
                           <th scope={"col"}>Category</th>
                           <th scope={"col"}>Author</th>
                           <th scope={"col"}>Available Copies</th>
+                          <th scope={"col"}>Edit</th>
+                          <th scope={"col"}>Delete</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -45,6 +47,8 @@ class Books extends Component {
                                   <td>{book.category}</td>
                                   <td>{book.author.name}</td>
                                   <td>{book.availableCopies}</td>
+                                  <td><button type="button" class="btn btn-info">Edit</button></td>
+                                  <td><button type="button" class="btn btn-danger">Delete</button></td>
                               </tr>
                           );
                       })}
@@ -52,7 +56,7 @@ class Books extends Component {
                   </table>
               </div>
           </div>
-      </div>
+        </div>
     );
   }
 }
