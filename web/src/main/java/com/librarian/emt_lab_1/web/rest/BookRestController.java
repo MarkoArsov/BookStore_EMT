@@ -76,7 +76,7 @@ public class BookRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("{id}/mark")
+    @GetMapping("/mark/{id}")
     public ResponseEntity<Integer> markAsTaken(@PathVariable Long id) throws BookNotFoundException {
         return ResponseEntity.ok().body(service.markAsTaken(id));
     }

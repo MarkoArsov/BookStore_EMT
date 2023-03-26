@@ -1,41 +1,43 @@
-import axios from '../custom-axios/axios';
+import axios from "../custom-axios/axios";
 
 const BookService = {
+  fetchCategories: () => {
+    return axios.get("/categories");
+  },
 
-    fetchCategories: () => {
-        return axios.get("/categories");
-    },
+  fetchBooks: () => {
+    return axios.get("/books");
+  },
 
-    fetchBooks: () => {
-        return axios.get("/books");
-    },
+  getBook: (id) => {
+    return axios.get("/books/" + id);
+  },
 
-    getBook: (id) => {
-        return axios.get(`/books/${id}`);
-    },
+  markBook: (id) => {
+    return axios.get("/books/mark/" + id);
+  },
 
-    deleteBook: (id) => {
-        return axios.delete(`/books/delete/${id}`);
-    },
+  deleteBook: (id) => {
+    return axios.delete("/books/delete/" + id);
+  },
 
-    addBook: (name, category, authorId, availableCopies) => {
-        return axios.post("/books/add", {
-            "name": name,
-            "category": category,
-            "authorId": authorId,
-            "availableCopies": availableCopies
-        });
-    },
+  addBook: (name, category, authorId, availableCopies) => {
+    return axios.post("/books/add", {
+      name: name,
+      category: category,
+      authorId: authorId,
+      availableCopies: availableCopies,
+    });
+  },
 
-    editBook: (id, name, category, authorId, availableCopies) => {
-        return axios.put(`/products/edit/${id}`, {
-            "name": name,
-            "category": category,
-            "authorId": authorId,
-            "availableCopies": availableCopies
-        });
-    },
-
-}
+  editBook: (id, name, category, authorId, availableCopies) => {
+    return axios.put("/products/edit/" + id, {
+      name: name,
+      category: category,
+      authorId: authorId,
+      availableCopies: availableCopies,
+    });
+  },
+};
 
 export default BookService;

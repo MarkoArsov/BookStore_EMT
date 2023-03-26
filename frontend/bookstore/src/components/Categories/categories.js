@@ -1,39 +1,25 @@
 import React from "react";
-import { Component } from "react";
 import BookService from "../../service/bookService";
 
-class Categories extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: [],
-    };
-  }
+const Categories = () => {
+  const [categories, setCategories] = React.useState([]);
 
-  componentDidMount() {
-    this.fetchCategories();
-  }
-
-  fetchCategories = () => {
+  React.useEffect(() => {
     BookService.fetchCategories().then((data) => {
-      this.setState({
-        categories: data.data,
-      });
+      setCategories(data.data);
     });
-  };
+  }, []);
 
-  render() {
-    return (
-      <div className="cointainer">
-        <br></br>
-        <ul className="list-group">
-          {this.state.categories.map((cat) => {
-            return <li className="list-group-item">{cat}</li>;
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="container mm-4 mt-5">
+      <h1>Categories</h1>
+      <ul className="list-group">
+        {categories.map((cat) => {
+          return <li className="list-group-item">{cat}</li>;
+        })}
+      </ul>
+    </div>
+  );
+};
 
 export default Categories;
