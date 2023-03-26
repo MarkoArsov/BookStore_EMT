@@ -24,30 +24,34 @@ class Books extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Books</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Author</th>
-              <th>Available Copies</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.books.map((book) => {
-              return (
-                <tr>
-                  <td>{book.name}</td>
-                  <td>{book.category}</td>
-                  <td>{book.author.name}</td>
-                  <td>{book.availableCopies}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+          <div className={"container mm-4 mt-5"}>
+          <h1>Books</h1>
+          <div className={"row"}>
+              <div className={"table-responsive"}>
+                  <table className={"table table-striped"}>
+                      <thead>
+                      <tr>
+                          <th scope={"col"}>Name</th>
+                          <th scope={"col"}>Category</th>
+                          <th scope={"col"}>Author</th>
+                          <th scope={"col"}>Available Copies</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {this.state.books.map(book => {
+                          return (
+                              <tr>
+                                  <td>{book.name}</td>
+                                  <td>{book.category}</td>
+                                  <td>{book.author.name}</td>
+                                  <td>{book.availableCopies}</td>
+                              </tr>
+                          );
+                      })}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
       </div>
     );
   }

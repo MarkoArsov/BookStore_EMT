@@ -39,8 +39,6 @@ public class BookRestController {
 
     @GetMapping
     public List<Book> findAll() {
-        System.out.println("==================================================================================");
-        System.out.println("INSIDE FIND ALL BOOKS");
         return service.findAll();
     }
 
