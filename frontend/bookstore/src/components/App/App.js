@@ -3,6 +3,7 @@ import Books from "../Books/books";
 import Header from '../Header/header'
 import "./App.css";
 import { BrowserRouter as Router, Routes, Navigate, Route } from "react-router-dom";
+import Categories from "../Categories/categories";
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           <div className="container">
             <Routes>
               <Route path={"/books"} element={<Books></Books>} />
+              <Route path={"/categories"} element={<Categories></Categories>} />
               <Route path="/" element={<Navigate replace to="/books" />} />
             </Routes>
           </div>
