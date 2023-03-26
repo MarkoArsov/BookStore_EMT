@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 public class BookRestController {
 
     private final BookService service;
@@ -38,6 +39,8 @@ public class BookRestController {
 
     @GetMapping
     public List<Book> findAll() {
+        System.out.println("==================================================================================");
+        System.out.println("INSIDE FIND ALL BOOKS");
         return service.findAll();
     }
 

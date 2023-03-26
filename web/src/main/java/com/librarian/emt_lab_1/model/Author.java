@@ -2,6 +2,7 @@ package com.librarian.emt_lab_1.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Entity
 @Data
