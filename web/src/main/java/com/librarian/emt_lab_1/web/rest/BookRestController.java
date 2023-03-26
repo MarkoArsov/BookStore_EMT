@@ -26,18 +26,14 @@ public class BookRestController {
     private final AuthorService authorService;
     private final CountryService countryService;
 
-    public BookRestController(BookService service, AuthorService authorService, CountryService countryService) {
+    public BookRestController(BookService service, AuthorService authorService, CountryService countryService) throws CountryNotFoundException, AuthorNotFoundException {
         this.service = service;
         this.authorService = authorService;
         this.countryService = countryService;
-    }
 
-    @GetMapping("/startdata")
-    public String startData() throws CountryNotFoundException, AuthorNotFoundException {
-        countryService.save("Macedonia", "Europe");
-        authorService.save("Marko", "Arsov", 1L);
-        service.save("Marko's Book", Category.FANTASY, 1L, 10);
-        return "Start Data Filled";
+        this.countryService.save("Macedonia", "Europe");
+        this.authorService.save("Marko", "Arsov", 1L);
+        this.service.save("Marko's Book", Category.FANTASY, 1L, 10);
     }
 
     @GetMapping
