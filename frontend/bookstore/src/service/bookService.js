@@ -22,7 +22,7 @@ const BookService = {
   },
 
   addBook: (name, category, authorId, availableCopies) => {
-    return axios.post("/books/add", {
+    return axios.post("/books", {
       name: name,
       category: category,
       authorId: authorId,
@@ -31,7 +31,7 @@ const BookService = {
   },
 
   editBook: (id, name, category, authorId, availableCopies) => {
-    return axios.put("/products/edit/" + id, {
+    return axios.put("/books/" + id, {
       name: name,
       category: category,
       authorId: authorId,

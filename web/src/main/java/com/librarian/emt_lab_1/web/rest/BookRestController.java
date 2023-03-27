@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/api/books")
@@ -33,8 +34,18 @@ public class BookRestController {
         this.countryService = countryService;
 
         this.countryService.save("Macedonia", "Europe");
-        this.authorService.save("Marko", "Arsov", 1L);
-        this.service.save("Marko's Book", Category.FANTASY, 1L, 10);
+
+        this.authorService.save("John", "Doe", 1L);
+        this.authorService.save("Jane", "Doe", 1L);
+
+        Random rand = new Random();
+        for (int i = 0; i < 32; i++) {
+            int n = rand.nextInt(Category.values().length);
+            long authorId = rand.nextLong(2L) + 1;
+            int copies = rand.nextInt(50) + 1;
+            this.service.save("Book_" + i, Category.values()[n], authorId, copies);
+        }
+
     }
 
     @GetMapping
@@ -62,6 +73,7 @@ public class BookRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
     @PostMapping
     public ResponseEntity<Book> save(@RequestBody BookDTO bookDTO) throws AuthorNotFoundException {
         return service.save(bookDTO)
@@ -69,6 +81,7 @@ public class BookRestController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
     @PutMapping("{id}")
     public ResponseEntity<Book> edit(@PathVariable Long id, @RequestBody BookDTO bookDTO) throws AuthorNotFoundException, BookNotFoundException {
         return service.edit(id, bookDTO)
