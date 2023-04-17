@@ -1,137 +1,123 @@
-import { Component } from "react";
+import React from "react";
 import BookService from "../../../service/bookService";
 import AuthorService from "../../../service/authorService";
+import { useNavigate } from "react-router-dom";
 
-class AddBook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: [],
-      authors: [],
-      formData: {
-        name: "",
-        category: "",
-        authorId: 0,
-        availableCopies: 0,
-      },
-    };
-  }
+const AddBook = () => {
+  const navigate = useNavigate();
+  const [categories, setCategories] = React.useState([]);
+  const [authors, setAuthors] = React.useState([]);
+  const [formData, setFormData] = React.useState({
+    name: "",
+    category: "",
+    authorId: 0,
+    availableCopies: 0,
+  });
 
-  componentDidMount() {
-    this.fetchCategories();
-    this.fetchAuthors();
-  }
+  React.useEffect(() => {
+    fetchCategories();
+    fetchAuthors();
+  });
 
-  fetchCategories = () => {
+  const fetchCategories = () => {
     BookService.fetchCategories().then((data) => {
-      this.setState({
-        categories: data.data,
-      });
+      setCategories(data.data);
     });
   };
 
-  fetchAuthors = () => {
+  const fetchAuthors = () => {
     AuthorService.fetchAuthors().then((data) => {
-      this.setState({
-        authors: data.data,
-      });
+      setAuthors(data.data);
     });
   };
 
-  onFormSubmit = (e) => {
+  const onFormSubmit = (e) => {
     e.preventDefault();
-    const name = this.state.formData.name;
-    const authorId = this.state.formData.authorId;
-    const category = this.state.formData.category;
-    const availableCopies = this.state.formData.availableCopies;
+    const name = formData.name;
+    const authorId = formData.authorId;
+    const category = formData.category;
+    const availableCopies = formData.availableCopies;
     BookService.addBook(name, category, authorId, availableCopies).then(() => {
-      window.location.href = "http://localhost:3000/books";
+      navigate("/books");
     });
   };
 
-  handleChange = (e) => {
-    this.setState({
-      formData: {
-        ...this.state.formData,
-        [e.target.name]: e.target.value.trim(),
-      },
-    });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
-  render() {
-    return (
-      <div className={"container mm-4 mt-5"}>
-        <form onSubmit={this.onFormSubmit}>
-          <div className="form-group">
-            <label for="name">Book Name</label>
-            <input
-              onChange={this.handleChange}
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              required
-              placeholder="Enter Book Name"
-            ></input>
-          </div>
+  return (
+    <div className={"container mm-4 mt-5"}>
+      <form onSubmit={onFormSubmit}>
+        <div className="form-group">
+          <label for="name">Book Name</label>
+          <input
+            onChange={handleChange}
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            required
+            placeholder="Enter Book Name"
+          ></input>
+        </div>
 
-          <div class="form-group">
-            <label for="category">Select Book Category</label>
-            <select
-              name="category"
-              class="form-control"
-              id="category"
-              onChange={this.handleChange}
-            >
-              <option value="" selected disabled hidden>
-                Select Category
+        <div class="form-group">
+          <label for="category">Select Book Category</label>
+          <select
+            name="category"
+            class="form-control"
+            id="category"
+            onChange={handleChange}
+          >
+            <option value="" selected disabled hidden>
+              Select Category
+            </option>
+            {categories.map((category) => (
+              <option value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label for="authorId">Author</label>
+          <select
+            name="authorId"
+            class="form-control"
+            id="authorId"
+            onChange={handleChange}
+          >
+            <option value="" selected disabled hidden>
+              Select Author
+            </option>
+            {authors.map((author) => (
+              <option value={author.id}>
+                {author.name + " " + author.surname}
               </option>
-              {this.state.categories.map((category) => (
-                <option value={category}>{category}</option>
-              ))}
-            </select>
-          </div>
+            ))}
+          </select>
+        </div>
 
-          <div className="form-group">
-            <label for="authorId">Author</label>
-            <select
-              name="authorId"
-              class="form-control"
-              id="authorId"
-              onChange={this.handleChange}
-            >
-              <option value="" selected disabled hidden>
-                Select Author
-              </option>
-              {this.state.authors.map((author) => (
-                <option value={author.id}>
-                  {author.name + " " + author.surname}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label for="availableCopies">Available Copies</label>
-            <input
-              onChange={this.handleChange}
-              name="availableCopies"
-              type="number"
-              className="form-control"
-              id="availableCopies"
-              placeholder="Enter Available Copies"
-            ></input>
-          </div>
-          <hr></hr>
-          <div className="form-group">
-            <button id="submit" type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+        <div className="form-group">
+          <label for="availableCopies">Available Copies</label>
+          <input
+            onChange={handleChange}
+            name="availableCopies"
+            type="number"
+            className="form-control"
+            id="availableCopies"
+            placeholder="Enter Available Copies"
+          ></input>
+        </div>
+        <hr></hr>
+        <div className="form-group">
+          <button id="submit" type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default AddBook;

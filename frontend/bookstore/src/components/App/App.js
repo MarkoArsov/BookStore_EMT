@@ -11,6 +11,7 @@ import {
   Route,
 } from "react-router-dom";
 import Categories from "../Categories/categories";
+import Authors from "../Authors/authors";
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
               <Route path={"/books/add"} element={<AddBook></AddBook >} />
               <Route path={"/books"} element={<Books></Books>} />
               <Route path={"/categories"} element={<Categories></Categories>} />
+              <Route path={"/authors"} element={<Authors></Authors>} />
               <Route path="/" element={<Navigate replace to="/books" />} />
             </Routes>
           </div>

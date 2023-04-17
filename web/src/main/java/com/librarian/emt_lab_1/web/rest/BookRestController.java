@@ -25,18 +25,14 @@ import java.util.Random;
 public class BookRestController {
 
     private final BookService service;
-    private final AuthorService authorService;
-    private final CountryService countryService;
 
     public BookRestController(BookService service, AuthorService authorService, CountryService countryService) throws CountryNotFoundException, AuthorNotFoundException {
         this.service = service;
-        this.authorService = authorService;
-        this.countryService = countryService;
 
-        this.countryService.save("Macedonia", "Europe");
+        countryService.save("Macedonia", "Europe");
 
-        this.authorService.save("John", "Doe", 1L);
-        this.authorService.save("Jane", "Doe", 1L);
+        authorService.save("John", "Doe", 1L);
+        authorService.save("Jane", "Doe", 1L);
 
         Random rand = new Random();
         for (int i = 0; i < 32; i++) {

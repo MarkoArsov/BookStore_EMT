@@ -65,67 +65,70 @@ class Books extends Component {
             </table>
           </div>
         </div>
-        <ReactPaginate
-          previousLabel={"back"}
-          nextLabel={"next"}
-          breakLabel={'...'}
-          breakClassName={"item break-me"}
-          pageClassName={"item pagination-page ml-5"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={"pagination m-4 justify-content-center"}
-          activeClassName={"item active"}
-          disabledClassName={'disabled-page'}
-          nextClassName={"item next"}
-          previousClassName={"item previous"}
-        />
+        <div className="d-flex justify-content-center mt-5">
+          <ReactPaginate
+            previousLabel={"BACK"}
+            nextLabel={"NEXT"}
+            breakLabel={"..."}
+            breakClassName={"item break-me"}
+            pageClassName={"item pagination-page ml-5"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination m-4 justify-content-center"}
+            activeClassName={"item activeItem"}
+            disabledClassName={"disabled-page"}
+            nextClassName={"item next"}
+            previousClassName={"item previous"}
+          />
+        </div>
       </div>
     );
   }
 
   handlePageClick = (data) => {
-      this.setState({
-        page: data.selected
-      })
-
+    this.setState({
+      page: data.selected,
+    });
   };
 
   getBookPage = (offset, nextPageOffset) => {
-    return this.state.books.map((book) => {
-      return (
-        <tr>
-          <td>{book.name}</td>
-          <td>{book.category}</td>
-          <td>{book.author.name + " " + book.author.surname}</td>
-          <td>{book.availableCopies}</td>
-          <td>
-            <Link className="btn btn-warning" to={"/books/edit/" + book.id}>
-              Edit
-            </Link>
-          </td>
-          <td>
-            <button
-              onClick={() => this.deleteBook(book.id)}
-              type="button"
-              className="btn btn-danger"
-            >
-              Delete
-            </button>
-          </td>
-          <td>
-            <button
-              onClick={() => this.markBook(book.id)}
-              type="button"
-              className="btn btn-info"
-            >
-              Mark As Taken
-            </button>
-          </td>
-        </tr>
-      );
-    }).filter( (book, index) => index >= offset && index < nextPageOffset);
+    return this.state.books
+      .map((book) => {
+        return (
+          <tr>
+            <td>{book.name}</td>
+            <td>{book.category}</td>
+            <td>{book.author.name + " " + book.author.surname}</td>
+            <td>{book.availableCopies}</td>
+            <td>
+              <Link className="btn btn-warning" to={"/books/edit/" + book.id}>
+                Edit
+              </Link>
+            </td>
+            <td>
+              <button
+                onClick={() => this.deleteBook(book.id)}
+                type="button"
+                className="btn btn-danger"
+              >
+                Delete
+              </button>
+            </td>
+            <td>
+              <button
+                onClick={() => this.markBook(book.id)}
+                type="button"
+                className="btn btn-info"
+              >
+                Mark As Taken
+              </button>
+            </td>
+          </tr>
+        );
+      })
+      .filter((book, index) => index >= offset && index < nextPageOffset);
   };
 }
 
